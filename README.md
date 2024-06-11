@@ -30,7 +30,7 @@ For Case Study 2: Investigating Metric Spike, there are 3 tables which are as fo
 
 ### Tasks 
 
-#### Case Study 1 : Job Data Analysis
+### Case Study 1 : Job Data Analysis
 
 A. **Jobs Reviewed Over Time**
    - *Objective*: Calculate the number of jobs reviewed per hour for each day in November 2020.
@@ -71,7 +71,7 @@ E. **Email Engagement Analysis**
 
 ### Insights
 
-#### Case Study 1 : Job Data Analysis
+### Case Study 1 : Job Data Analysis
 
 **A. Jobs Reviewed Over Time**
 
