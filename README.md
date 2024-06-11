@@ -33,56 +33,58 @@ For Case Study 2: Investigating Metric Spike, there are 3 tables which are as fo
 #### Case Study 1 : Job Data Analysis
 
 A. **Jobs Reviewed Over Time**
-   - Objective: Calculate the number of jobs reviewed per hour for each day in November 2020.
-   - Your Task: Write an SQL query to calculate the number of jobs reviewed per hour for each day in November 2020.
+   - *Objective*: Calculate the number of jobs reviewed per hour for each day in November 2020.
+   - *Your Task*: Write an SQL query to calculate the number of jobs reviewed per hour for each day in November 2020.
      
 B. **Throughput Analysis**
-   - Objective: Calculate the 7-day rolling average of throughput (number of events per second).
-   - Your Task: Write an SQL query to calculate the 7-day rolling average of throughput. Additionally, explain whether you prefer using the daily metric or the 7-day rolling average for throughput, and why.
+   - *Objective*: Calculate the 7-day rolling average of throughput (number of events per second).
+   - *Your Task*: Write an SQL query to calculate the 7-day rolling average of throughput. Additionally, explain whether you prefer using the daily metric or the 7-day rolling average for throughput, and why.
      
 C. **Language Share Analysis**
-   - Objective: Calculate the percentage share of each language in the last 30 days.
-   - Your Task: Write an SQL query to calculate the percentage share of each language over the last 30 days.
+   - *Objective*: Calculate the percentage share of each language in the last 30 days.
+   - *Your Task*: Write an SQL query to calculate the percentage share of each language over the last 30 days.
      
 D. **Duplicate Rows Detection**
-   - Objective: Identify duplicate rows in the data.
-   - Your Task: Write an SQL query to display duplicate rows from the job_data table.
+   - *Objective*: Identify duplicate rows in the data.
+   - *Your Task*: Write an SQL query to display duplicate rows from the job_data table.
 
 ### Case Study 2: Investigating Metric Spike
 A. **Weekly User Engagement**
-   - Objective: Measure the activeness of users on a weekly basis.
-   - Your Task: Write an SQL query to calculate the weekly user engagement.
+   - *Objective*: Measure the activeness of users on a weekly basis.
+   - *Your Task*: Write an SQL query to calculate the weekly user engagement.
      
 B. **User Growth Analysis**
-   - Objective: Analyze the growth of users over time for a product.
-   - Your Task: Write an SQL query to calculate the user growth for the product.
+   - *Objective*: Analyze the growth of users over time for a product.
+   - *Your Task*: Write an SQL query to calculate the user growth for the product.
      
 C. **Weekly Retention Analysis**
-   - Objective: Analyze the retention of users on a weekly basis after signing up for a product.
-   - Your Task: Write an SQL query to calculate the weekly retention of users based on their sign-up cohort.
+   - *Objective*: Analyze the retention of users on a weekly basis after signing up for a product.
+   - *Your Task*: Write an SQL query to calculate the weekly retention of users based on their sign-up cohort.
      
 D. **Weekly Engagement Per Device**
-   - Objective: Measure the activeness of users on a weekly basis per device.
-   - Your Task: Write an SQL query to calculate the weekly engagement per device.
+   - *Objective*: Measure the activeness of users on a weekly basis per device.
+   - *Your Task*: Write an SQL query to calculate the weekly engagement per device.
      
 E. **Email Engagement Analysis**
-   - Objective: Analyze how users are engaging with the email service.
-   - Your Task: Write an SQL query to calculate the email engagement metrics.
+   - *Objective*: Analyze how users are engaging with the email service.
+   - *Your Task*: Write an SQL query to calculate the email engagement metrics.
 
 ### Insights
 
 #### Case Study 1 : Job Data Analysis
 
-A. Jobs Reviewed Over Time
+**A. Jobs Reviewed Over Time**
 
-Query:
+*- Query:*
 ```sql
 SELECT ds AS "Dates", ROUND((COUNT(DISTINCT(job_id))/SUM(time_spent))*60*60) AS "No. of jobs reviewed per hour per day"
 FROM job_data
 WHERE ds BETWEEN "2020-11-01" AND "2020-11-30"
 GROUP BY ds;
 ```
-Result:
+<details>
+ <summary>Output:</summary>
+  
 | Dates       |  No. of jobs reviewed per hour per day |
 |-------------|----------------------------------------|
 | 2020-11-25  | 80                                     |
@@ -91,16 +93,24 @@ Result:
 | 2020-11-28  | 218                                    |
 | 2020-11-29  | 180                                    |
 | 2020-11-30  | 180                                    |
+</details>
 
-B. Throughput Analysis
+*- Insights:*
 
-Query:
+The number of jobs reviewed per hour per day is maximum on 28th November 2020 which is 218 followed by 29th and 30th of November 2020 which is 180.The number of jobs reviewed per hour per day is minimum on 27th November 2020  which is 35.
+
+
+**B. Throughput Analysis**
+
+*- Query:*
 ```sql
 SELECT ds AS "Dates", ROUND((COUNT(DISTINCT(event))/SUM(time_spent)),2) AS "Daily Throughput"
 FROM job_data
 GROUP BY ds;
 ```
-Result:
+<details>
+  <summary>Output:</summary>
+  
 | Dates       |  Daily Throughput |
 |-------------|-------------------|
 | 2020-11-25  | 0.02              |
@@ -109,26 +119,36 @@ Result:
 | 2020-11-28  | 0.06              |
 | 2020-11-29  | 0.05              |
 | 2020-11-30  | 0.05              |
+</details>
 
-Query:
+*- Query:*
 ```sql
 SELECT ROUND(COUNT(event)/SUM(time_spent),2) AS "Weekly Throughput"
 FROM job_data;
 ```
-Result:
+<details>
+  <summary>Output:</summary>
+  
 | Weekly Throughput |
 |-------------------|
 | 0.03              |
+</details>
 
-C. Language Share Analysis
+*- Insights:*
 
-Query:
+The throughput analysis were analyzed daily and the highest throughput was found to be 0.06 on 28th November 2020 and lowest throughput was found to be 0.01 on 27th November 2020.The weekly throughput analysis were also done and is found to be 0.03.Generally, Rolling average for throughput = sum of data over time / time period. To discover the trends in data, using smaller parts of the data is preferred. Considering the above data, daily metric gives a better understanding of trends going up or down. However, there are chances of incorrect insights drawn because of daily fluctuations.
+
+**C. Language Share Analysis**
+
+*- Query:*
 ```sql
 SELECT language AS "Languages", ROUND((COUNT(language)/(SELECT COUNT(*) FROM job_data))*100,2) AS "Percentage(%)" 
 FROM job_data
 GROUP BY language;
 ```
-Result:
+<details>
+  <summary>Output:</summary>
+  
 | Languages |  Percentage(%) |
 |-----------|----------------|
 | English   | 12.50          |
@@ -137,44 +157,60 @@ Result:
 | Hindi     | 12.50          |
 | French    | 12.50          |
 | Italian   | 12.50          |
+</details>
 
-D. Duplicate Rows Detection
+*- Insights:*
 
-Query:
+Over the last 30 days, the highest percentage share was for the Persian Language which accounts to 37.50% and the remaining languages English, Arabic, Hindi, French and Italian have a share of 12.50% each.
+
+**D. Duplicate Rows Detection**
+
+*- Query:*
 ```sql
 SELECT actor_id AS "Actor ID", COUNT(*) AS "No. of Duplicate rows"
 FROM job_data
 GROUP BY actor_id
 HAVING COUNT(*)>1;
 ```
-Result:
-
+<details>
+  <summary>Output:</summary>
+  
 | Actor ID |  No. of Duplicate rows |
 |----------|------------------------|
 | 1003     | 2                      |
+</details>
 
-Query:
+*- Query:*
 ```sql
 SELECT job_id AS "Job ID", COUNT(*) AS "No. of Duplicate rows"
 FROM job_data
 GROUP BY job_id
 HAVING COUNT(*)>1;
 ```
-Result:
+<details>
+  <summary>Output:</summary>
+  
 | Job ID |  No. of Duplicate rows |
 |--------|------------------------|
 | 23     | 3                      |
+</details>
+
+*- Insights:*
+
+While considering the actor_id column, there are 2 records corresponding to actor_id 1003 and while considering the job_id column, there are 3 records having the same job_id as 23.
 
 ### Case Study 2: Investigating Metric Spike
 
-A. Weekly User Engagement
+**A. Weekly User Engagement**
 
-Query:
+*- Query:*
 ```sql
 SELECT EXTRACT(WEEK FROM(occurred_at)) AS "Week Number",COUNT(DISTINCT(user_id)) AS "Number of Active Users"
 FROM events WHERE event_type ="engagement" GROUP BY 1;
 ```
-Result:
+<details>
+  <summary>Output:</summary>
+  
 | Week Number |  Number of Active Users |
 |-------------|-------------------------|
 | 17          | 663                     |
@@ -196,10 +232,15 @@ Result:
 | 33          | 1225                    |
 | 34          | 1204                    |
 | 35          | 104                     |
+</details>
 
-B. User Growth Analysis
+*- Insights:*
 
-Query: Month-wise user growth analysis
+Weekly User Engagement metrics measures the number of unique users who engage with a product/app/service within a 7-day period.The highest number of active users were in the 30th week of November and least user engagement was in the 35th week of November.
+
+**B. User Growth Analysis**
+
+*- Query: Month-wise user growth analysis*
 ```sql
 SELECT Months, Number_of_Users, 
 ROUND(((Number_of_Users/LAG(Number_of_Users,1) OVER (ORDER BY Months)-1)*100),2) AS "Growth in %" 
@@ -208,7 +249,9 @@ FROM
 FROM users WHERE activated_at IS NOT NULL
 GROUP BY 1 ORDER BY 1) AS sub;
 ```
-Result:
+<details>
+  <summary>Output:</summary>
+  
 | Months |  Number_of_Users |  Growth in % |
 |--------|------------------|--------------|
 | 1      | 712              | -            |
@@ -223,8 +266,9 @@ Result:
 | 10     | 390              | 18.18        |
 | 11     | 399              | 2.31         |
 | 12     | 486              | 21.80        |
+</details>
 
-Query: Year-wise user growth analysis
+*- Query: Year-wise user growth analysis*
 ```sql
 SELECT Year, Number_of_Users, 
 ROUND(((Number_of_Users/LAG(Number_of_Users,1) OVER (ORDER BY Year)-1)*100),2) AS "Growth in %" 
@@ -233,16 +277,22 @@ FROM
 FROM users WHERE activated_at IS NOT NULL
 GROUP BY 1 ORDER BY 1) AS sub;
 ```
-Result:
-
+<details>
+<summary>Output:</summary>
+  
 | Year |  Number_of_Users |  Growth in % |
 |------|------------------|--------------|
 | 2013 | 3283             | -            |
 | 2014 | 6098             | 85.74        |
+</details>
 
-C. Weekly Retention Analysis
+*- Insights:*
 
-Query:
+There is a significant 85.74 % growth in the number of users in the year 2014 than 2013.The number of users have declined in the month of September signifying a dip of 75.50%.
+
+**C. Weekly Retention Analysis**
+
+*- Query:*
 ```sql
 SELECT weekn AS "Week Numbers",
 SUM(CASE WHEN week_number = 0 THEN 1 ELSE 0 END) AS "Week 0",
@@ -276,7 +326,7 @@ GROUP BY weekn
 ORDER BY weekn;
 ```
 <details>
-  <summary>Result:</summary>
+  <summary>Output:</summary>
 
 | Week Numbers |  Week 0 |  Week 1 |  Week 2 |  Week 3 |  Week 4 |  Week 5 |  Week 6 |  Week 7 |  Week 8 |  Week 9 |  Week 10 |  Week 11 |  Week 12 |  Week 13 |  Week 14 |  Week 15 |  Week 16 |  Week 17 |  Week 18 |
 |--------------|---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|----------|----------|----------|----------|----------|----------|----------|----------|----------|
@@ -300,10 +350,14 @@ ORDER BY weekn;
 | 34           | 279     | 44      | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        |
 | 35           | 18      | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        |
  </details>
- 
-D. Weekly Engagement Per Device
 
-Query:
+*- Insights:*
+
+There is a decline in the Weekly user retention over the time. More focus needed to improve strategies and enhance user experience.
+
+**D. Weekly Engagement Per Device**
+
+*- Query:*
 ```sql
 SELECT EXTRACT(WEEK FROM (occurred_at)) AS "Weeks",
 device AS "Device",COUNT(DISTINCT(user_id)) AS "User Engagement"
@@ -312,7 +366,7 @@ GROUP BY 2,1
 ORDER BY 1;
 ```
 <details>
-  <summary>Result:</summary>
+  <summary>Output:</summary>
   
 | Weeks |  Device                |  User Engagement | 
 |-------|------------------------|------------------|
@@ -861,11 +915,15 @@ ORDER BY 1;
 | 35    | samsung galaxy note    | 1                |
 | 35    | samsung galaxy s4      | 6                |
 | 35    | windows surface        | 3                |
-
 </details>
-E. Email Engagement Analysis
 
-Query:
+*- Insights:*
+
+Weekly Engagement varies across devices and weeks. Adaptive strategies is needed to monitor device trends and optimize user engagement for lower engagement devices.
+
+**E. Email Engagement Analysis**
+
+*- Query:*
 ```sql
 SELECT Week_number AS "Week Number", ROUND((Weekly_Digest/total)*100,2) AS "Weekly Digest Rate",
 ROUND((Reengagement_Mail/total)*100,2) AS "Re-engagement Mail Rate",
@@ -880,7 +938,8 @@ COUNT(user_id) AS "total"
 FROM email_events
 GROUP BY 1) AS sub;
 ```
-Result:
+<details>
+  <summary>Output:</summary>
 | Week Number |  Weekly Digest Rate |  Re-engagement Mail Rate |  Opened Email Rate |  Email Clickthrough Rate |
 |-------------|---------------------|--------------------------|--------------------|--------------------------|
 | 17          | 62.32               | 5.01                     | 21.28              | 11.39                    |
@@ -902,6 +961,11 @@ Result:
 | 33          | 64.73               | 4.26                     | 22.86              | 7.91                     |
 | 34          | 64.33               | 4.08                     | 23.51              | 7.53                     |
 | 35          | 0.00                | 37.80                    | 32.28              | 29.92                    |
+</details>
+
+*- Insights:*
+
+The company has to compare the results with the industry set benchmarks and  focus on optimizing the emails to improve the user engagement.
 
 ### Conclusion
 
