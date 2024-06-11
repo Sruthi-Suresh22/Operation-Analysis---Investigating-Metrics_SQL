@@ -275,7 +275,8 @@ WHERE A.user_id = B.user_id
 GROUP BY weekn 
 ORDER BY weekn;
 ```
-Result:
+<details>
+  <summary>Result:</summary>
 
 | Week Numbers |  Week 0 |  Week 1 |  Week 2 |  Week 3 |  Week 4 |  Week 5 |  Week 6 |  Week 7 |  Week 8 |  Week 9 |  Week 10 |  Week 11 |  Week 12 |  Week 13 |  Week 14 |  Week 15 |  Week 16 |  Week 17 |  Week 18 |
 |--------------|---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|----------|----------|----------|----------|----------|----------|----------|----------|----------|
@@ -298,7 +299,8 @@ Result:
 | 33           | 286     | 202     | 9       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        |
 | 34           | 279     | 44      | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        |
 | 35           | 18      | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0       | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        |
-
+ </details>
+ 
 D. Weekly Engagement Per Device
 
 Query:
@@ -309,7 +311,9 @@ FROM events
 GROUP BY 2,1
 ORDER BY 1;
 ```
-Result:
+<details>
+  <summary>Result:</summary>
+  
 | Weeks |  Device                |  User Engagement | 
 |-------|------------------------|------------------|
 | 17    | acer aspire desktop    | 9                |
@@ -858,7 +862,7 @@ Result:
 | 35    | samsung galaxy s4      | 6                |
 | 35    | windows surface        | 3                |
 
-
+</details>
 E. Email Engagement Analysis
 
 Query:
@@ -898,3 +902,9 @@ Result:
 | 33          | 64.73               | 4.26                     | 22.86              | 7.91                     |
 | 34          | 64.33               | 4.08                     | 23.51              | 7.53                     |
 | 35          | 0.00                | 37.80                    | 32.28              | 29.92                    |
+
+### Conclusion
+
+This project helps in understanding how Data Analytics play a great role in analyzing a company’s end-to-end operations while working with various teams, such as operations, support, and marketing, helping them derive valuable insights from the data they collect. This analysis also pave way for investigating metrics and to know how to deal with these metric spikes.
+Doing this project, helped in learning Advanced SQL concepts to get the desired output and to load huge amount of data present in csv files using MySQL workbench. 
+
