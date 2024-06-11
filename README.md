@@ -82,6 +82,16 @@ FROM job_data
 WHERE ds BETWEEN "2020-11-01" AND "2020-11-30"
 GROUP BY ds;
 ```
+Result:
+| Dates       |  No. of jobs reviewed per hour per day |
+|-------------|----------------------------------------|
+| 2020-11-25  | 80                                     |
+| 2020-11-26  | 64                                     |
+| 2020-11-27  | 35                                     |
+| 2020-11-28  | 218                                    |
+| 2020-11-29  | 180                                    |
+| 2020-11-30  | 180                                    |
+
 B. Throughput Analysis
 
 Query:
@@ -89,9 +99,27 @@ Query:
 SELECT ds AS "Dates", ROUND((COUNT(DISTINCT(event))/SUM(time_spent)),2) AS "Daily Throughput"
 FROM job_data
 GROUP BY ds;
+```
+Result:
+| Dates       |  Daily Throughput |
+|-------------|-------------------|
+| 2020-11-25  | 0.02              |
+| 2020-11-26  | 0.02              |
+| 2020-11-27  | 0.01              |
+| 2020-11-28  | 0.06              |
+| 2020-11-29  | 0.05              |
+| 2020-11-30  | 0.05              |
+
+Query:
+```sql
 SELECT ROUND(COUNT(event)/SUM(time_spent),2) AS "Weekly Throughput"
 FROM job_data;
 ```
+Result:
+| Weekly Throughput |
+|-------------------|
+| 0.03              |
+
 C. Language Share Analysis
 
 Query:
@@ -100,6 +128,16 @@ SELECT language AS "Languages", ROUND((COUNT(language)/(SELECT COUNT(*) FROM job
 FROM job_data
 GROUP BY language;
 ```
+Result:
+| Languages |  Percentage(%) |
+|-----------|----------------|
+| English   | 12.50          |
+| Arabic    | 12.50          |
+| Persian   | 37.50          |
+| Hindi     | 12.50          |
+| French    | 12.50          |
+| Italian   | 12.50          |
+
 D. Duplicate Rows Detection
 
 Query:
@@ -109,12 +147,24 @@ FROM job_data
 GROUP BY actor_id
 HAVING COUNT(*)>1;
 ```
+Result:
+
+| Actor ID |  No. of Duplicate rows |
+|----------|------------------------|
+| 1003     | 2                      |
+
+Query:
 ```sql
 SELECT job_id AS "Job ID", COUNT(*) AS "No. of Duplicate rows"
 FROM job_data
 GROUP BY job_id
 HAVING COUNT(*)>1;
 ```
+Result:
+| Job ID |  No. of Duplicate rows |
+|--------|------------------------|
+| 23     | 3                      |
+
 ### Case Study 2: Investigating Metric Spike
 
 A. Weekly User Engagement
